@@ -8,21 +8,16 @@ use Exception;
 
 class Configuration
 {
-    private Database $database;
+    private DatabaseConfiguration $database;
     
-    /**
-     * @throws Exception
-     */
-    public function __construct()
+    private function __construct()
     {
-        if( ! file_exists(__DIR__."/../../conf.json")) throw new Exception("The configuration file 'conf.json' is missing");
-        
         $json = file_get_contents(__DIR__."/../../conf.json");
-        
+    
         $config = json_decode($json);
-        
+    
         if( ! empty($config->database)) {
-            $this->database = new Database(
+            $this->database = new DatabaseConfiguration(
                 $config->database->host,
                 $config->database->user,
                 $config->database->password,
@@ -33,9 +28,19 @@ class Configuration
     }
     
     /**
-     * @return Database
+     * @throws Exception
      */
-    public function getDbConfig() : Database
+    public static function load() : Configuration
+    {
+        if( ! file_exists(__DIR__."/../../conf.json")) throw new Exception("The configuration file 'conf.json' is missing");
+        
+        return new Configuration();
+    }
+    
+    /**
+     * @return DatabaseConfiguration
+     */
+    public function getDbConfig() : DatabaseConfiguration
     {
         return $this->database;
     }

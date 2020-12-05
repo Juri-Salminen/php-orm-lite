@@ -4,7 +4,7 @@
 namespace Gutenisse\PhpOrmLite\Config;
 
 
-class Database
+class DatabaseConfiguration
 {
     private string $host;
     private string $user;
