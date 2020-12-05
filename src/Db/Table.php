@@ -12,7 +12,7 @@ class Table
     private string $name;
     private array $columns = [];
     
-    public function __construct(PDO $con, string $name, bool $overWrite = true)
+    public function __construct(PDO $con, string $name)
     {
         $this->con = $con;
         $this->name = $name;
@@ -23,8 +23,6 @@ class Table
         foreach ($stmt->fetchAll() as $row) {
             $this->columns[] = new Column($row);
         }
-        
-        $this->writeModelClass($overWrite);
     }
     
     /**
@@ -32,9 +30,7 @@ class Table
      */
     public function getName() : string
     {
-        $name = mb_strtolower($this->name);
-        
-        return ucfirst($name);
+        return $this->name;
     }
     
     /**
@@ -61,7 +57,7 @@ class Table
         return $column->isNumeric() ? "int" : "string";
     }
     
-    private function writeModelClass(bool $overWrite) : void
+    public function writeModelClass(bool $overWrite) : void
     {
         $class = "<?php
 
@@ -86,10 +82,10 @@ class {$this->getName()}
         $class .= "}";
         
         if($overWrite) {
-            file_put_contents(__DIR__."/../../Models/{$this->getName()}.php", $class);
+            file_put_contents(__DIR__."/../../Models/{$this->getUcaseFirst($this->getName())})", $class);
         } else {
-            if( ! file_exists(__DIR__."/../../Models/{$this->getName()}.php")) {
-                file_put_contents(__DIR__."/../../Models/{$this->getName()}.php", $class);
+            if( ! file_exists(__DIR__."/../../Models/{$this->getUcaseFirst($this->getName())}.php")) {
+                file_put_contents(__DIR__."/../../Models/{$this->getUcaseFirst($this->getName())}.php", $class);
             }
         }
     }
