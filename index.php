@@ -27,9 +27,12 @@ $orm->writeModels();
  * the tables in your database.
  */
 $tables = $orm->getTables();
+
+// Iterate threw each table and print out each column
 foreach ($tables as $table) {
     echo "{$table->getName()}<br>";
     
+    // Iterate threw each column and print out it's properties
     foreach ($table->getColumns() as $column) {
         echo "&nbsp;&nbsp;- {$column->getName()} {$column->getType()}({$column->getLength()})<br>";
     }
