@@ -62,10 +62,11 @@ class Table
         if($overWrite === false && file_exists(__DIR__."/../../Models/{$this->getUcaseFirst($this->getName())}.php")) {
             return;
         }
+        
         $class = "<?php
 
 
-class {$this->getName()}
+class {$this->getUcaseFirst($this->getName())}
 {\n";
         
         foreach ($this->getColumns() as $column) {
@@ -84,6 +85,6 @@ class {$this->getName()}
         
         $class .= "}";
     
-        file_put_contents(__DIR__."/../../Models/{$this->getUcaseFirst($this->getName())})", $class);
+        file_put_contents(__DIR__."/../../Models/{$this->getUcaseFirst($this->getName())}.php", $class);
     }
 }
