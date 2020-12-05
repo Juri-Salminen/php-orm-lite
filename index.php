@@ -29,4 +29,13 @@ $orm->writeModels();
 $tables = $orm->getTables();
 foreach ($tables as $table) {
     echo "{$table->getName()}<br>";
+    
+    foreach ($table->getColumns() as $column) {
+        echo "&nbsp;&nbsp;- {$column->getName()} {$column->getType()}({$column->getLength()})<br>";
+    }
 }
+
+/**
+ * The main point of an ORM is to make CRUD-operations as easy as possible
+ * and now it's time to show how that is done in PhpLiteOrm.
+ */
