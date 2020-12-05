@@ -59,6 +59,9 @@ class Table
     
     public function writeModelClass(bool $overWrite) : void
     {
+        if($overWrite === false && file_exists(__DIR__."/../../Models/{$this->getUcaseFirst($this->getName())}.php")) {
+            return;
+        }
         $class = "<?php
 
 
@@ -80,13 +83,7 @@ class {$this->getName()}
         }
         
         $class .= "}";
-        
-        if($overWrite) {
-            file_put_contents(__DIR__."/../../Models/{$this->getUcaseFirst($this->getName())})", $class);
-        } else {
-            if( ! file_exists(__DIR__."/../../Models/{$this->getUcaseFirst($this->getName())}.php")) {
-                file_put_contents(__DIR__."/../../Models/{$this->getUcaseFirst($this->getName())}.php", $class);
-            }
-        }
+    
+        file_put_contents(__DIR__."/../../Models/{$this->getUcaseFirst($this->getName())})", $class);
     }
 }
