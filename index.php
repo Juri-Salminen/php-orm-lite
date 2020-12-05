@@ -30,7 +30,7 @@ $factory = new Factory($con);
 $tables = [];
 
 foreach ($result->fetchAll(PDO::FETCH_BOTH) as $row) {
-    $tables[] = $factory->createTable($row[0]);
+    $tables[] = $factory->getTable($row[0]);
 }
 
 foreach ($tables as $table) {
