@@ -1,0 +1,19 @@
+{
+  "name": "gutenisse/php-lite-orm",
+  "description": "A simple PHP ORM",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Juri Salminen",
+      "email": "juri@spix.nu"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Gutenisse\\PhpOrmLite\\": "src/"
+    }
+  },
+  "require": {
+  }
+}
