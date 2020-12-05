@@ -33,8 +33,17 @@ class PhpOrmLite
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         ];
     
+        switch (strtolower($this->configuration->getDbConfig()->getType())) {
+            case "sql":
+                $dsn = "dblib:version=8.0;host={$this->configuration->getDbConfig()->getHost()};dbname={$this->configuration->getDbConfig()->getDatabase()};";
+                break;
+            case "mysql":
+            default:
+                $dsn = "mysql:host={$this->configuration->getDbConfig()->getHost()};dbname={$this->configuration->getDbConfig()->getDatabase()};port={$this->configuration->getDbConfig()->getPort()};charset=utf8mb4";
+        }
+        
         $this->con = new PDO(
-            "mysql:host={$this->configuration->getDbConfig()->getHost()};dbname={$this->configuration->getDbConfig()->getDatabase()};port={$this->configuration->getDbConfig()->getPort()};charset=utf8mb4",
+            $dsn,
             $this->configuration->getDbConfig()->getUser(),
             $this->configuration->getDbConfig()->getPassword(),
             $options

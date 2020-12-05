@@ -6,6 +6,7 @@ namespace Gutenisse\PhpOrmLite\Config;
 
 class DatabaseConfiguration
 {
+    private string $type;
     private string $host;
     private string $user;
     private string $password;
@@ -15,14 +16,16 @@ class DatabaseConfiguration
     /**
      * Database constructor.
      *
+     * @param string   $type
      * @param  string  $host
      * @param  string  $user
      * @param  string  $password
      * @param  string  $database
      * @param  int  $port
      */
-    public function __construct(string $host, string $user, string $password, string $database, int $port)
+    public function __construct(string $type, string $host, string $user, string $password, string $database, int $port)
     {
+        $this->type = $type;
         $this->host = $host;
         $this->user = $user;
         $this->password = $password;
@@ -68,5 +71,13 @@ class DatabaseConfiguration
     public function getPort() : int
     {
         return $this->port;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getType() : string
+    {
+        return $this->type;
     }
 }
