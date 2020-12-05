@@ -31,7 +31,6 @@ $tables = [];
 
 foreach ($result->fetchAll(PDO::FETCH_BOTH) as $row) {
     $tables[] = $factory->createTable($row[0]);
-    break;
 }
 
 foreach ($tables as $table) {

@@ -16,8 +16,8 @@ class Factory
         $this->con = $con;
     }
     
-    public function createTable(string $name) : Table
+    public function createTable(string $name, bool $overWrite = true) : Table
     {
-        return new Table($this->con, $name);
+        return new Table($this->con, $name, $overWrite);
     }
 }

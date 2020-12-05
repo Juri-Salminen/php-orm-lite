@@ -8,13 +8,13 @@ class Column
 {
     private string $name;
     private string $type;
-    private int $length;
+    private int $length = 0;
     private int $decimals;
     private bool $nullable;
     private string $key;
     private ?string $default;
     private string $extra;
-    private bool $numeric;
+    private bool $numeric = false;
     
     /**
      * Column constructor.

@@ -12,7 +12,7 @@ class Table
     private string $name;
     private array $columns = [];
     
-    public function __construct(PDO $con, string $name)
+    public function __construct(PDO $con, string $name, bool $overWrite = true)
     {
         $this->con = $con;
         $this->name = $name;
@@ -24,7 +24,7 @@ class Table
             $this->columns[] = new Column($row);
         }
         
-        $this->writeModelClass();
+        $this->writeModelClass($overWrite);
     }
     
     /**
@@ -61,7 +61,7 @@ class Table
         return $column->isNumeric() ? "int" : "string";
     }
     
-    private function writeModelClass() : void
+    private function writeModelClass(bool $overWrite) : void
     {
         $class = "<?php
 
@@ -85,6 +85,12 @@ class {$this->getName()}
         
         $class .= "}";
         
-        file_put_contents(__DIR__."/../../Models/{$this->getName()}.php", $class);
+        if($overWrite) {
+            file_put_contents(__DIR__."/../../Models/{$this->getName()}.php", $class);
+        } else {
+            if( ! file_exists(__DIR__."/../../Models/{$this->getName()}.php")) {
+                file_put_contents(__DIR__."/../../Models/{$this->getName()}.php", $class);
+            }
+        }
     }
 }
