@@ -60,6 +60,8 @@ class Column
                 $lengths      = explode(",", $length);
                 $this->length = $lengths[0];
                 $this->decimals = $lengths[1];
+            } else {
+                $this->length = $length;
             }
             
             // Is the column type numeric?
