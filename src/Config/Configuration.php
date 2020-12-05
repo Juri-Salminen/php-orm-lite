@@ -8,13 +8,12 @@ use Exception;
 
 class Configuration
 {
-    private static Database $database;
+    private Database $database;
     
     /**
-     * @return Configuration
      * @throws Exception
      */
-    public static function create() : Configuration
+    public function __construct()
     {
         if( ! file_exists(__DIR__."/../../conf.json")) throw new Exception("The configuration file 'conf.json' is missing");
         
@@ -23,14 +22,21 @@ class Configuration
         $config = json_decode($json);
         
         if( ! empty($config->database)) {
-            self::createDatabaseConfiguration($config->database);
+            $this->database = new Database(
+                $config->database->host,
+                $config->database->user,
+                $config->database->password,
+                $config->database->database,
+                $config->database->port
+            );
         }
-        
-        return new Configuration();
     }
     
-    private static function createDatabaseConfiguration(object $config) : void
+    /**
+     * @return Database
+     */
+    public function getDbConfig() : Database
     {
-        self::$database = Database::create($config->host, $config->user, $config->password, $config->database, $config->port);
+        return $this->database;
     }
 }
