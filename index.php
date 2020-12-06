@@ -62,24 +62,45 @@ $orm->writeModels(true);
  */
 $tables = $orm->getTables();
 
-// Iterate threw each table and print out each column
+/**
+ * Iterate threw each table and print out each column
+ */
+echo "Print all tables and their columns:<br>";
 foreach ($tables as $table) {
-    echo "{$table->getName()}<br>";
+    echo "<strong>&nbsp;&nbsp;{$table->getName()}</strong><br>";
     
     // Iterate threw each column and print out it's properties
     foreach ($table->getColumns() as $column) {
         echo "&nbsp;&nbsp;- {$column->getName()} {$column->getType()}({$column->getLength()})<br>";
     }
+    
+    echo "<br>";
 }
+
+echo "<br>";
 
 /**
  * The main point of an ORM is to make CRUD-operations as easy as possible
  * and now it's time to show how that is done in PhpLiteOrm.
  */
+echo "Print all products:<br>";
 try {
     foreach (Products::getAll() as $product) {
-        echo "{$product->getSku()}: {$product->getTitle()}<br>";
+        echo "&nbsp;&nbsp;- {$product->getSku()}: {$product->getTitle()}<br>";
     }
+} catch (Exception $exception) {
+    echo $exception->getMessage();
+}
+
+echo "<br>";
+
+/**
+ * Return a single entity by ID
+ */
+echo "Print a single product:<br>";
+try {
+    $product = Products::getById(1);
+    echo "&nbsp;&nbsp;- {$product->getSku()}: {$product->getTitle()}<br>";
 } catch (Exception $exception) {
     echo $exception->getMessage();
 }

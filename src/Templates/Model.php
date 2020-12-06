@@ -25,7 +25,7 @@ $class .= "
         }
         
         return \$products;
-    }\n\n";
+    }\n";
 
 $class .= "
     /**
