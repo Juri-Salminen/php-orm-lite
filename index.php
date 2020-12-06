@@ -86,7 +86,7 @@ echo "<br>";
 echo "Print all products:<br>";
 try {
     foreach (Products::getAll() as $product) {
-        echo "&nbsp;&nbsp;- {$product->getSku()}: {$product->getTitle()}<br>";
+        echo "&nbsp;&nbsp;- {$product->sku}: {$product->title}<br>";
     }
 } catch (Exception $exception) {
     echo $exception->getMessage();
@@ -100,7 +100,21 @@ echo "<br>";
 echo "Print a single product:<br>";
 try {
     $product = Products::getById(1);
-    echo "&nbsp;&nbsp;- {$product->getSku()}: {$product->getTitle()}<br>";
+    echo "&nbsp;&nbsp;- {$product->sku}: {$product->title}<br>";
 } catch (Exception $exception) {
     echo $exception->getMessage();
 }
+
+echo "<br>";
+
+/**
+ * Add new product.
+ */
+$product = new Products();
+$product->title = "PhpStorm 2019";
+$product->sku = "4242";
+$product->save();
+
+/**
+ * Update product
+ */

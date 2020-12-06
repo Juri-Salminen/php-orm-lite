@@ -11,6 +11,21 @@ class {$this->getUcaseFirst($this->getName())}
 {\n";
 $class .= "\tprivate static string \$_tableName = \"{$this->getName()}\";\n";
 
+foreach ($this->getColumns() as $column) {
+    if($column->getName() !== "id") {
+        $defaultValue = $this->getType($column) === "string" ? " = \"\"" : " = 0";
+    } else {
+        $defaultValue = "";
+    }
+    $class .= "\tpublic {$this->getType($column)} \${$this->getLowercase($column->getName())}{$defaultValue};\n";
+}
+
+$class .= "
+    public function save() : void
+    {
+        Model::save(\$this, self::\$_tableName);
+    }\n";
+
 $class .= "
     /**
     * @return Products[]
@@ -34,7 +49,7 @@ $class .= "
     * @return Products
     * @throws Exception
     */
-    public static function getById(int \$id) : {$this->getName()}
+    public static function getById(int \$id) : {$this->getUcaseFirst($this->getName())}
     {
         try {
             return Model::get(\$id, self::\$_tableName);
@@ -44,23 +59,19 @@ $class .= "
     }
 ";
 
-foreach ($this->getColumns() as $column) {
-    $class .= "\tprivate {$this->getType($column)} \${$this->getLowercase($column->getName())};\n";
-}
-
 $class .= "\n";
 
-foreach ($this->getColumns() as $column) {
-    $type = $column->isNumeric() ? "int" : "string";
-    $class .= "\tpublic function get{$this->getUcaseFirst($column->getName())}() : {$type}\n";
-    $class .= "\t{\n";
-    $class .= "\t\treturn \$this->{$this->getLowercase($column->getName())};\n";
-    $class .= "\t}\n\n";
-
-    $class .= "\tpublic function set{$this->getUcaseFirst($column->getName())}($type \$value) : void\n";
-    $class .= "\t{\n";
-    $class .= "\t\t\$this->{$this->getLowercase($column->getName())} = \$value;\n";
-    $class .= "\t}\n\n";
-}
+//foreach ($this->getColumns() as $column) {
+//    $type = $column->isNumeric() ? "int" : "string";
+//    $class .= "\tpublic function get{$this->getUcaseFirst($column->getName())}() : {$type}\n";
+//    $class .= "\t{\n";
+//    $class .= "\t\treturn \$this->{$this->getLowercase($column->getName())};\n";
+//    $class .= "\t}\n\n";
+//
+//    $class .= "\tpublic function set{$this->getUcaseFirst($column->getName())}($type \$value) : void\n";
+//    $class .= "\t{\n";
+//    $class .= "\t\t\$this->{$this->getLowercase($column->getName())} = \$value;\n";
+//    $class .= "\t}\n\n";
+//}
 
 $class .= "}";

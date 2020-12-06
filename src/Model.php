@@ -45,4 +45,39 @@ class Model
         
         return $stmt->fetchAll(PDO::FETCH_CLASS, "Gutenisse\\PhpOrmLite\\Models\\". ucfirst($table))[0];
     }
+    
+    /**
+     * @param  object  $entity
+     * @param  string  $table
+     *
+     * @throws Exception
+     */
+    public static function save(object $entity, string $table) : void
+    {
+        $sql = "";
+        
+        if(empty($entity->id)) {
+            foreach (get_object_vars($entity) as $propery => $value) {
+                $columns[] = $propery;
+                $values[] = ":{$propery}";
+            }
+
+            if(empty($columns) || empty($values)) throw new Exception("The entity model does not contain any properties.");
+
+            $columString = implode(", ", $columns);
+            $valueString = implode(", ", $values);
+            
+            $sql = "INSERT INTO {$table} ({$columString}) VALUES ({$valueString});";
+            
+            $stmt = PhpOrmLite::getDc()->getPdo()->prepare($sql);
+    
+            foreach (get_object_vars($entity) as $propery => $value) {
+                $stmt->bindValue(":{$propery}", $value);
+            }
+        } else {
+        
+        }
+        
+        $stmt->execute();
+    }
 }
