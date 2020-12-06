@@ -54,7 +54,7 @@ $orm = new PhpOrmLite($dc);
  * model file.
  * $overWrite is false by default
  */
-$orm->writeModels();
+$orm->writeModels(true);
 
 /**
  * Call getTables() to get an array of Table objects representing
@@ -76,4 +76,10 @@ foreach ($tables as $table) {
  * The main point of an ORM is to make CRUD-operations as easy as possible
  * and now it's time to show how that is done in PhpLiteOrm.
  */
-$products = Products::class;
+try {
+    foreach (Products::getAll() as $product) {
+        echo "{$product->getSku()}: {$product->getTitle()}<br>";
+    }
+} catch (Exception $exception) {
+    echo $exception->getMessage();
+}

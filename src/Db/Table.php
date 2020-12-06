@@ -89,8 +89,28 @@ class Table
 
 namespace Gutenisse\PhpOrmLite\Models;
 
+use Exception;
+use Gutenisse\PhpOrmLite\Model;
+
 class {$this->getUcaseFirst($this->getName())}
 {\n";
+        $class .= "\tprivate static string \$_tableName = \"{$this->getName()}\";\n";
+        
+        $class .= "
+    /**
+    * @return Products[]
+    * @throws Exception
+    */
+    public static function getAll() : array
+    {
+        try {
+            \$products = Model::list(self::\$_tableName);
+        } catch (Exception \$exception) {
+            throw \$exception;
+        }
+        
+        return \$products;
+    }\n\n";
         
         foreach ($this->getColumns() as $column) {
             $class .= "\tprivate {$this->getType($column)} \${$this->getLowercase($column->getName())};\n";
