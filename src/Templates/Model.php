@@ -21,6 +21,9 @@ foreach ($this->getColumns() as $column) {
 }
 
 $class .= "
+    /**
+    * @throws Exception
+    */
     public function save() : void
     {
         Model::save(\$this, self::\$_tableName);
@@ -28,7 +31,7 @@ $class .= "
 
 $class .= "
     /**
-    * @return Products[]
+    * @return {$this->getUcaseFirst($this->getName())}[]
     * @throws Exception
     */
     public static function getAll() : array
@@ -46,7 +49,7 @@ $class .= "
     /**
     * @param  int \$id
     *
-    * @return Products
+    * @return {$this->getUcaseFirst($this->getName())}
     * @throws Exception
     */
     public static function getById(int \$id) : {$this->getUcaseFirst($this->getName())}

@@ -110,11 +110,17 @@ echo "<br>";
 /**
  * Add new product.
  */
-$product = new Products();
-$product->title = "PhpStorm 2019";
-$product->sku = "4242";
-$product->save();
+//$product = new Products();
+//$product->title = "PhpStorm 2019";
+//$product->sku = "4242";
+//$product->save();
 
 /**
  * Update product
  */
+try {
+    $product = Products::getById(10);
+    $product->title = "Ny titel";
+    $product->save();
+} catch (Exception $exception) {
+}

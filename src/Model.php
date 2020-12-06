@@ -50,34 +50,98 @@ class Model
      * @param  object  $entity
      * @param  string  $table
      *
+     * @return int
      * @throws Exception
      */
-    public static function save(object $entity, string $table) : void
+    public static function save(object $entity, string $table) : int
     {
-        $sql = "";
-        
         if(empty($entity->id)) {
-            foreach (get_object_vars($entity) as $propery => $value) {
-                $columns[] = $propery;
-                $values[] = ":{$propery}";
-            }
-
-            if(empty($columns) || empty($values)) throw new Exception("The entity model does not contain any properties.");
-
-            $columString = implode(", ", $columns);
-            $valueString = implode(", ", $values);
-            
-            $sql = "INSERT INTO {$table} ({$columString}) VALUES ({$valueString});";
-            
-            $stmt = PhpOrmLite::getDc()->getPdo()->prepare($sql);
-    
-            foreach (get_object_vars($entity) as $propery => $value) {
-                $stmt->bindValue(":{$propery}", $value);
-            }
+            return self::insert($entity, $table);
         } else {
-        
+            return self::update($entity, $table);
+        }
+    }
+    
+    /**
+     * @param  object  $entity
+     * @param  string  $table
+     *
+     * @return int
+     * @throws Exception
+     */
+    private static function insert(object $entity, string $table) : int
+    {
+        foreach (get_object_vars($entity) as $propery => $value) {
+            $columns[] = $propery;
+            $values[] = ":{$propery}";
+        }
+    
+        if(empty($columns) || empty($values)) throw new Exception("The entity model does not contain any properties.");
+    
+        $columString = implode(", ", $columns);
+        $valueString = implode(", ", $values);
+    
+        $sql = "INSERT INTO {$table} ({$columString}) VALUES ({$valueString});";
+    
+        $stmt = PhpOrmLite::getDc()->getPdo()->prepare($sql);
+    
+        foreach (get_object_vars($entity) as $propery => $value) {
+            $stmt->bindValue(":{$propery}", $value);
+        }
+    
+        try {
+            $stmt->execute();
+            return self::getId($table);
+        }
+        catch(Exception $exception) {
+            if($exception->getCode() == 23000) {
+                return self::update($entity, $table);
+            }
+            
+            throw $exception;
+        }
+    }
+    
+    /**
+     * @param  object  $entity
+     * @param  string  $table
+     *
+     * @return int
+     * @throws Exception
+     */
+    private static function update(object $entity, string $table) : int
+    {
+        foreach (get_object_vars($entity) as $propery => $value) {
+            if( ! empty($value)) {
+                $columns[] = "{$propery} = :{$propery}";
+            }
         }
         
-        $stmt->execute();
+        if(empty($columns)) throw new Exception("The entity model does not contain any properties.");
+    
+        $columString = implode(", ", $columns);
+    
+        $sql = "UPDATE {$table} SET {$columString} WHERE id = :id;";
+        
+        $stmt = PhpOrmLite::getDc()->getPdo()->prepare($sql);
+    
+        foreach (get_object_vars($entity) as $propery => $value) {
+            if( ! empty($value)) {
+                $stmt->bindValue(":{$propery}", $value);
+            }
+        }
+    
+        try {
+            $stmt->execute();
+            return self::getId($table);
+        }
+        catch(Exception $exception) {
+            throw $exception;
+        }
+    }
+    
+    private static function getId(string $table) : int
+    {
+        return PhpOrmLite::getDc()->getPdo()->query("SELECT id FROM {$table} WHERE id = LAST_INSERT_ID();")->fetchColumn();
     }
 }
