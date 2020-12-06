@@ -9,19 +9,35 @@ use PDO;
 
 class PhpOrmLite
 {
-    private DependencyContainer $dc;
+    private static DependencyContainer $dc;
     private array $tables = [];
     
     public function __construct(DependencyContainer $dc)
     {
-        $this->dc = $dc;
+        self::$dc = $dc;
     }
     
+    /**
+     * @return DependencyContainer
+     */
+    public static function getDc() : DependencyContainer
+    {
+        return self::$dc;
+    }
+    
+    /**
+     * @param  string  $name
+     *
+     * @return Table
+     */
     private function getTable(string $name) : Table
     {
-        return new Table($this->dc->getPdo(), $name);
+        return new Table($name);
     }
     
+    /**
+     * @param  bool  $overWrite
+     */
     public function writeModels(bool $overWrite = false) : void
     {
         foreach ($this->getTables() as $table) {
@@ -37,7 +53,7 @@ class PhpOrmLite
     public function getTables() : array
     {
         $this->tables = [];
-        $result = $this->dc->getPdo()->query("SHOW TABLES;");
+        $result = self::$dc->getPdo()->query("SHOW TABLES;");
         $result->execute();
     
         foreach ($result->fetchAll(PDO::FETCH_BOTH) as $row) {

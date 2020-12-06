@@ -4,20 +4,23 @@
 namespace Gutenisse\PhpOrmLite\Db;
 
 
-use PDO;
+use Gutenisse\PhpOrmLite\PhpOrmLite;
 
 class Table
 {
-    private PDO $con;
     private string $name;
     private array $columns = [];
     
-    public function __construct(PDO $con, string $name)
+    /**
+     * Table constructor.
+     *
+     * @param  string  $name
+     */
+    public function __construct(string $name)
     {
-        $this->con = $con;
         $this->name = $name;
         
-        $stmt = $con->query("DESCRIBE {$name};");
+        $stmt = PhpOrmLite::getDc()->getPdo()->query("DESCRIBE {$name};");
         $stmt->execute();
         
         foreach ($stmt->fetchAll() as $row) {
@@ -41,22 +44,40 @@ class Table
         return $this->columns;
     }
     
+    /**
+     * @param  string  $string
+     *
+     * @return string
+     */
     private function getUcaseFirst(string $string) : string
     {
         $string = mb_strtolower($string);
         return ucfirst($string);
     }
- 
+    
+    /**
+     * @param  string  $string
+     *
+     * @return string
+     */
     private function getLowercase(string $string) : string
     {
         return mb_strtolower($string);
     }
     
+    /**
+     * @param  Column  $column
+     *
+     * @return string
+     */
     private function getType(Column $column) : string
     {
         return $column->isNumeric() ? "int" : "string";
     }
     
+    /**
+     * @param  bool  $overWrite
+     */
     public function writeModelClass(bool $overWrite) : void
     {
         if($overWrite === false && file_exists(__DIR__."/../Models/{$this->getUcaseFirst($this->getName())}.php")) {
