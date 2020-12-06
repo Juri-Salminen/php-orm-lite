@@ -56,6 +56,11 @@ foreach ($this->getColumns() as $column) {
     $class .= "\t{\n";
     $class .= "\t\treturn \$this->{$this->getLowercase($column->getName())};\n";
     $class .= "\t}\n\n";
+
+    $class .= "\tpublic function set{$this->getUcaseFirst($column->getName())}($type \$value) : void\n";
+    $class .= "\t{\n";
+    $class .= "\t\t\$this->{$this->getLowercase($column->getName())} = \$value;\n";
+    $class .= "\t}\n\n";
 }
 
 $class .= "}";
