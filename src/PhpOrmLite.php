@@ -4,55 +4,22 @@
 namespace Gutenisse\PhpOrmLite;
 
 
-use Exception;
-use Gutenisse\PhpOrmLite\Config\Configuration;
 use Gutenisse\PhpOrmLite\Db\Table;
 use PDO;
 
 class PhpOrmLite
 {
-    private Configuration $configuration;
-    private PDO $con;
+    private DependencyContainer $dc;
     private array $tables = [];
     
-    /**
-     * PhpOrmLite constructor.
-     *
-     * @throws Exception
-     */
-    public function __construct()
+    public function __construct(DependencyContainer $dc)
     {
-        try {
-            $this->configuration = Configuration::load();
-        } catch (Exception $exception) {
-            throw $exception;
-        }
-    
-        $options = [
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        ];
-    
-        switch (strtolower($this->configuration->getDbConfig()->getType())) {
-            case "sql":
-                $dsn = "dblib:version=8.0;host={$this->configuration->getDbConfig()->getHost()};dbname={$this->configuration->getDbConfig()->getDatabase()};";
-                break;
-            case "mysql":
-            default:
-                $dsn = "mysql:host={$this->configuration->getDbConfig()->getHost()};dbname={$this->configuration->getDbConfig()->getDatabase()};port={$this->configuration->getDbConfig()->getPort()};charset=utf8mb4";
-        }
-        
-        $this->con = new PDO(
-            $dsn,
-            $this->configuration->getDbConfig()->getUser(),
-            $this->configuration->getDbConfig()->getPassword(),
-            $options
-        );
+        $this->dc = $dc;
     }
     
     private function getTable(string $name) : Table
     {
-        return new Table($this->con, $name);
+        return new Table($this->dc->getPdo(), $name);
     }
     
     public function writeModels(bool $overWrite = false) : void
@@ -70,7 +37,7 @@ class PhpOrmLite
     public function getTables() : array
     {
         $this->tables = [];
-        $result = $this->con->query("SHOW TABLES;");
+        $result = $this->dc->getPdo()->query("SHOW TABLES;");
         $result->execute();
     
         foreach ($result->fetchAll(PDO::FETCH_BOTH) as $row) {
