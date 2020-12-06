@@ -51,7 +51,7 @@ class Table
      */
     private function getUcaseFirst(string $string) : string
     {
-        $string = mb_strtolower($string);
+        $string = strtolower($string);
         return ucfirst($string);
     }
     
@@ -62,7 +62,7 @@ class Table
      */
     private function getLowercase(string $string) : string
     {
-        return mb_strtolower($string);
+        return strtolower($string);
     }
     
     /**
@@ -86,6 +86,10 @@ class Table
         
         require __DIR__."/../Templates/Model.php";
     
+        if( ! file_exists(__DIR__."/../Models")) {
+            mkdir(__DIR__."/../Models");
+        }
+        
         file_put_contents(__DIR__."/../Models/{$this->getUcaseFirst($this->getName())}.php", $class);
     }
 }
