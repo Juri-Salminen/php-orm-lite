@@ -1,6 +1,7 @@
 <?php
 
 
+use Gutenisse\PhpOrmLite\Models\Products;
 use Gutenisse\PhpOrmLite\PhpOrmLite;
 
 require __DIR__."/vendor/autoload.php";
@@ -26,7 +27,7 @@ $orm->writeModels();
  * Call getTables() to get an array of Table objects representing
  * the tables in your database.
  */
-$tables = $orm->getTables();
+$tables = $orm->getTables(true);
 
 // Iterate threw each table and print out each column
 foreach ($tables as $table) {
@@ -42,3 +43,4 @@ foreach ($tables as $table) {
  * The main point of an ORM is to make CRUD-operations as easy as possible
  * and now it's time to show how that is done in PhpLiteOrm.
  */
+$products = Products::class;

@@ -66,6 +66,8 @@ class Table
         $class = "<?php
 
 
+namespace Gutenisse\PhpOrmLite\Models;
+
 class {$this->getUcaseFirst($this->getName())}
 {\n";
         
