@@ -15,7 +15,7 @@ class Model
      * @return array
      * @throws Exception
      */
-    public static function list(string $table)
+    public static function list(string $table) : array
     {
         $result = PhpOrmLite::getDc()->getPdo()->query("SELECT * FROM {$table};");
         if($result->rowCount() === 0) throw new Exception("The table '{$table}' has no records.");
