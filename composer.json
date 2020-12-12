@@ -1,5 +1,5 @@
 {
-  "name": "gutenisse/php-lite-orm",
+  "name": "gutenisse/php-orm-lite",
   "description": "A simple PHP ORM",
   "minimum-stability": "dev",
   "authors": [
