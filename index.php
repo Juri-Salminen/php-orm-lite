@@ -65,9 +65,9 @@ $tables = $orm->getTables();
 /**
  * Iterate threw each table and print out each column
  */
-echo "Print all tables and their columns:<br>";
+echo "<strong>Print all tables and their columns:</strong><br><br>";
 foreach ($tables as $table) {
-    echo "<strong>&nbsp;&nbsp;{$table->getName()}</strong><br>";
+    echo "&nbsp;&nbsp;{$table->getName()}<br>";
     
     // Iterate threw each column and print out it's properties
     foreach ($table->getColumns() as $column) {
@@ -83,7 +83,7 @@ echo "<br>";
  * The main point of an ORM is to make CRUD-operations as easy as possible
  * and now it's time to show how that is done in PhpLiteOrm.
  */
-echo "Print all products:<br>";
+echo "<strong>Print all products:</strong><br>";
 try {
     foreach (Products::getAll() as $product) {
         echo "&nbsp;&nbsp;- {$product->sku}: {$product->title}<br>";
@@ -95,9 +95,9 @@ try {
 echo "<br>";
 
 /**
- * Return a single entity by ID
+ * Return a single product entity by ID
  */
-echo "Print a single product:<br>";
+echo "<strong>Print a single product:</strong><br>";
 try {
     $product = Products::getById(1);
     echo "&nbsp;&nbsp;- {$product->sku}: {$product->title}<br>";
@@ -123,4 +123,5 @@ try {
     $product->title = "Ny titel";
     $product->save();
 } catch (Exception $exception) {
+    echo $exception->getMessage();
 }
