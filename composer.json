@@ -1,8 +1,7 @@
 {
   "name": "gutenisse/php-lite-orm",
   "description": "A simple PHP ORM",
-  "minimum-stability": "stable",
-  "license": "proprietary",
+  "minimum-stability": "dev",
   "authors": [
     {
       "name": "Juri Salminen",
