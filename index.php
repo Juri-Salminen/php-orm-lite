@@ -8,7 +8,7 @@ use Gutenisse\PhpOrmLite\PhpOrmLite;
 require __DIR__."/vendor/autoload.php";
 
 /**
- * PhpOrmLite requires an active PDO instance, so we start by creating one.
+ * PhpOrmLite requires an active PDO instance, so start by creating one.
  * The following PDO instance is configured to connect to a MySql database
  * hosted on 'localhost' with standard port 3306.
  * You should replace the host, port, username ond password to match your
@@ -30,8 +30,8 @@ $pdo = new PDO(
 );
 
 /**
- * PhpOrmLite uses dependency injection by adding dependencies in to an
- * instance of DependencyContainer which then are injected to PhpOrmLite threw
+ * PhpOrmLite uses dependency injection by adding dependencies into a
+ * instance of DependencyContainer injected to PhpOrmLite by
  * it's constructor hence allowing all internal parts of PhpOrmLite access to
  * the different dependencies like the PDO-instance.
  */
@@ -40,19 +40,16 @@ $dc->setPdo($pdo);
 
 
 /**
- * Make sure you have edited the configuration file conf.json in your
- * root folder and set your database options.
- *
  * Create an instance of PhpOrmLite.
  */
 $orm = new PhpOrmLite($dc);
 
 /**
- * To write actual model class files for each table in your database,
+ * To write the actual model class files for each table in your database,
  * call the writeModels() function with the optional bool parameter
- * $overWrite to indicate whether or not to overwrite existing
- * model file.
- * $overWrite is false by default
+ * $overWrite to either skip or overwrite existing model file.
+ *
+ * @param bool $overWrite is false by default
  */
 $orm->writeModels(true);
 
@@ -81,7 +78,7 @@ echo "<br>";
 
 /**
  * The main point of an ORM is to make CRUD-operations as easy as possible
- * and now it's time to show how that is done in PhpLiteOrm.
+ * and here's how it's done using PhpLiteOrm.
  */
 echo "<strong>Print all products:</strong><br>";
 try {
