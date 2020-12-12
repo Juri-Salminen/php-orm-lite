@@ -1,6 +1,6 @@
 {
   "name": "gutenisse/php-orm-lite",
-  "description": "A simple PHP ORM",
+  "description": "A simple PHP ORM made with the purpose of learning new stuff :)",
   "minimum-stability": "dev",
   "authors": [
     {
