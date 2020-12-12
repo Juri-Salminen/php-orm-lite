@@ -85,22 +85,28 @@ class Column
     }
     
     /**
+     * Returns the actual name of the column.
+     *
      * @return string
      */
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }
     
     /**
+     * Returns the column type.
+     *
      * @return string
      */
-    public function getType()
+    public function getType() : string
     {
         return $this->type;
     }
     
     /**
+     * Returns the columns lenght property.
+     *
      * @return int
      */
     public function getLength() : int
@@ -109,6 +115,8 @@ class Column
     }
     
     /**
+     * Returns wether the column type is nullable or not.
+     *
      * @return bool
      */
     public function isNullable() : bool
@@ -119,7 +127,7 @@ class Column
     /**
      * @return string
      */
-    public function getKey()
+    public function getKey() : string
     {
         return $this->key;
     }
@@ -127,7 +135,7 @@ class Column
     /**
      * @return string|null
      */
-    public function getDefault()
+    public function getDefault() : ?string
     {
         return $this->default;
     }
@@ -135,7 +143,7 @@ class Column
     /**
      * @return string
      */
-    public function getExtra()
+    public function getExtra() : string
     {
         return $this->extra;
     }

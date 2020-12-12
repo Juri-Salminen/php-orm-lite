@@ -26,6 +26,8 @@ class Table
     }
     
     /**
+     * Returns the actual name of the table.
+     *
      * @return string
      */
     public function getName() : string
@@ -34,6 +36,8 @@ class Table
     }
     
     /**
+     * Returns all the columns in the table.
+     *
      * @return Column[]
      */
     public function getColumns() : array
@@ -73,6 +77,11 @@ class Table
     }
     
     /**
+     * Writes a Model class file in the Models folder. Per default existing
+     * files will be skipped. Set $overWrite to true if you want to overwrite
+     * existing files. Please note that any changes you made to the Model files
+     * will we gone as the files are fully replaced by new files.
+     *
      * @param  bool  $overWrite
      */
     public function writeModelClass(bool $overWrite) : void
