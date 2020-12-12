@@ -1,5 +1,4 @@
 .idea
-conf.json
 vendor
 composer.lock
 src/Models
