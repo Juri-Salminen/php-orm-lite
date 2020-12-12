@@ -5,7 +5,7 @@ The repository is mainly for my own learning about PHP and Composer.
 
 The example in example.php uses a MySql database with two tables:
 
-CREATE TABLE `products` (
+´CREATE TABLE `products` (
 `sku` VARCHAR(50) NULL DEFAULT NULL,
 `title` VARCHAR(50) NULL DEFAULT NULL,
 `created` VARCHAR(50) NULL DEFAULT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE `products` (
 PRIMARY KEY (`id`) USING BTREE,
 UNIQUE INDEX `sku` (`sku`) USING BTREE
 )
-ENGINE=InnoDB ;
+ENGINE=InnoDB;´
 
 CREATE TABLE `properties` (
 `property` VARCHAR(50) NOT NULL DEFAULT '',
