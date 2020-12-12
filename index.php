@@ -16,8 +16,8 @@ require __DIR__."/vendor/autoload.php";
  */
 $host     = "localhost"; // The hostname of your database server, i.e "db001.example.com", "localhost", "195.10.10.100" etc.
 $database = "demo-db"; // The name of the database you want to connect to.
-$port     = 3306; // The port number on which the databaser server is listening on.
-$charset  = "utf8mb4"; // The charset to be used by the connection.
+$port     = 3306; // The port number on which the database server is listening.
+$charset  = "utf8mb4"; // The charset used by the connection.
 
 $pdo = new PDO(
     "mysql:host={$host};dbname={$database};port={$port};charset={$charset}",
