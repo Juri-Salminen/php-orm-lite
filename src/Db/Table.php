@@ -8,7 +8,6 @@ use Gutenisse\PhpOrmLite\PhpOrmLite;
 
 class Table
 {
-    private string $name;
     private array $columns = [];
     
     /**
@@ -16,10 +15,8 @@ class Table
      *
      * @param  string  $name
      */
-    public function __construct(string $name)
+    public function __construct(private string $name)
     {
-        $this->name = $name;
-        
         $stmt = PhpOrmLite::getDc()->getPdo()->query("DESCRIBE {$name};");
         $stmt->execute();
         
