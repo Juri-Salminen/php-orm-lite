@@ -57,26 +57,6 @@ class Table
     }
     
     /**
-     * @param  string  $string
-     *
-     * @return string
-     */
-    private function getLowercase(string $string) : string
-    {
-        return strtolower($string);
-    }
-    
-    /**
-     * @param  Column  $column
-     *
-     * @return string
-     */
-    private function getType(Column $column) : string
-    {
-        return $column->isNumeric() ? "int" : "string";
-    }
-    
-    /**
      * Writes a Model class file in the Models folder. Per default existing
      * files will be skipped. Set $overWrite to true if you want to overwrite
      * existing files. Please note that any changes you made to the Model files
