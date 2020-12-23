@@ -57,6 +57,20 @@ class Table
     }
     
     /**
+     * @noinspection PhpUnusedPrivateMethodInspection
+     *
+     * Används av Templates/Model.php, så ta inte bort
+     *
+     * @param  string  $string
+     *
+     * @return string
+     */
+    private function getLowerCase(string $string) : string
+    {
+        return strtolower($string);
+    }
+    
+    /**
      * Writes a Model class file in the Models folder. Per default existing
      * files will be skipped. Set $overWrite to true if you want to overwrite
      * existing files. Please note that any changes you made to the Model files
@@ -77,5 +91,19 @@ class Table
         }
         
         file_put_contents(__DIR__."/../Models/{$this->getUcaseFirst($this->getName())}.php", $class);
+    }
+    
+    /**
+     * @noinspection PhpUnusedPrivateMethodInspection
+     *
+     * Används av Templates/Models, så ta inte bort.
+     *
+     * @param  Column  $column
+     *
+     * @return string
+     */
+    private function getType(Column $column) : string
+    {
+        return $column->isNumeric() ? "int" : "string";
     }
 }

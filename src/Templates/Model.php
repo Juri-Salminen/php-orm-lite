@@ -17,7 +17,7 @@ foreach ($this->getColumns() as $column) {
     } else {
         $defaultValue = "";
     }
-    $class .= "\tpublic {$this->getType($column)} \${$this->getLowercase($column->getName())}{$defaultValue};\n";
+    $class .= "\tpublic {$this->getType($column)} \${$this->getLowerCase($column->getName())}{$defaultValue};\n";
 }
 
 $class .= "
@@ -63,18 +63,4 @@ $class .= "
 ";
 
 $class .= "\n";
-
-//foreach ($this->getColumns() as $column) {
-//    $type = $column->isNumeric() ? "int" : "string";
-//    $class .= "\tpublic function get{$this->getUcaseFirst($column->getName())}() : {$type}\n";
-//    $class .= "\t{\n";
-//    $class .= "\t\treturn \$this->{$this->getLowercase($column->getName())};\n";
-//    $class .= "\t}\n\n";
-//
-//    $class .= "\tpublic function set{$this->getUcaseFirst($column->getName())}($type \$value) : void\n";
-//    $class .= "\t{\n";
-//    $class .= "\t\t\$this->{$this->getLowercase($column->getName())} = \$value;\n";
-//    $class .= "\t}\n\n";
-//}
-
 $class .= "}";
