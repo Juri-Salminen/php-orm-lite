@@ -80,17 +80,17 @@ class Table
      */
     public function writeModelClass(bool $overWrite) : void
     {
-        if($overWrite === false && file_exists(__DIR__."/../Models/{$this->getUcaseFirst($this->getName())}.php")) {
+        if($overWrite === false && file_exists(__DIR__."/../../Models/{$this->getUcaseFirst($this->getName())}.php")) {
             return;
         }
         
         require __DIR__."/../Templates/Model.php";
     
-        if( ! file_exists(__DIR__."/../Models")) {
-            mkdir(__DIR__."/../Models");
+        if( ! file_exists(__DIR__."/../../Models")) {
+            mkdir(__DIR__."/../../Models");
         }
         
-        file_put_contents(__DIR__."/../Models/{$this->getUcaseFirst($this->getName())}.php", $class);
+        file_put_contents(__DIR__."/../../Models/{$this->getUcaseFirst($this->getName())}.php", $class);
     }
     
     /**

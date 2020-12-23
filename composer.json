@@ -13,7 +13,8 @@
   ],
   "autoload": {
     "psr-4": {
-      "Gutenisse\\PhpOrmLite\\": "src/"
+      "Gutenisse\\PhpOrmLite\\": "src/",
+      "Gutenisse\\PhpOrmLite\\Models\\": "Models/"
     }
   },
   "require": {
