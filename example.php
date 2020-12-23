@@ -51,7 +51,7 @@ $orm = new PhpOrmLite($dc);
  *
  * @param bool $overWrite is false by default
  */
-$orm->writeModels(true);
+$orm->writeModels();
 
 /**
  * Call getTables() to get an array of Table objects representing
@@ -117,7 +117,7 @@ echo "<br>";
  */
 try {
     $product = Products::getById(10);
-    $product->title = "Ny titel";
+    $product->title = "An other title";
     $product->save();
 } catch (Exception $exception) {
     echo $exception->getMessage();
