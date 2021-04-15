@@ -51,7 +51,7 @@ $orm = new PhpOrmLite($dc);
  *
  * @param bool $overWrite is false by default
  */
-$orm->writeModels();
+$orm->writeModels(true);
 
 /**
  * Call getTables() to get an array of Table objects representing
